@@ -24,3 +24,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHOI_GAME_FD6AF }}
           channelId: live
           projectId: choi-game-fd6af
+          
