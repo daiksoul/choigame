@@ -8,6 +8,7 @@ on:
       - main
     types:
       - closed
+  workflow_dispatch:
 jobs:
   build_and_deploy:
     if: github.event.pull_request.merged == true
