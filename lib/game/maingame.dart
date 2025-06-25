@@ -8,8 +8,9 @@ import 'package:flame/extensions.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 
 class MainGame extends Forge2DGame {
-  MainGame()
-      : super(zoom: 0.0001, gravity: Vector2(0, 100.0), world: ChoiWorld()) {
+  MainGame() : super(zoom: 20, gravity: Vector2(0, 60.0), world: ChoiWorld()) {
+    // camera = CameraComponent.withFixedResolution(
+    //     width: 1920, height: 1080, world: world);
     // debugMode = true;
   }
 }
@@ -21,7 +22,6 @@ class ChoiWorld extends Forge2DWorld
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
-    // game.addAll(createBoundaries(game));
     game.add(Wall(Vector2(0, 0), Vector2(0, game.canvasSize.y)));
     game.add(Wall(Vector2(game.canvasSize.x, 0), game.canvasSize.xy));
     game.add(Wall(Vector2(0, game.canvasSize.y), game.canvasSize.xy));
@@ -33,7 +33,7 @@ class ChoiWorld extends Forge2DWorld
     if (cooldown <= 0) {
       double rad = Random().nextInt(3) * 20 + 20;
       game.add(Circle(rad, Vector2(event.canvasPosition.x, rad),
-          Vector2(0, rad * rad * 100)));
+          Vector2(0, rad * rad * 100000)));
       cooldown = 0.5;
     }
   }
@@ -43,6 +43,17 @@ class ChoiWorld extends Forge2DWorld
     super.update(dt);
     if (cooldown > 0) {
       cooldown -= dt;
+    }
+
+    List<Component> t = [];
+    game.children.query<Circle>().forEach((element) {
+      if (element.tagged) {
+        t.add(element);
+      }
+    });
+
+    for (final e in t) {
+      game.remove(e);
     }
   }
 }
